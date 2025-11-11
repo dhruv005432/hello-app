@@ -1,0 +1,39 @@
+.register-container {
+  max-width: 450px;
+  margin: 50px auto;
+  padding: 25px;
+  background: #ffffff;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  border-radius: 15px;
+  text-align: center;
+}
+
+.register-container h2 {
+  color: #1565c0;
+  margin-bottom: 10px;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.phone-section {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.success-snackbar {
+  background: #4caf50 !important;
+  color: #fff !important;
+}
+
+.error-snackbar {
+  background: #f44336 !important;
+  color: #fff !important;
+}

@@ -1,0 +1,45 @@
+<div class="login-container">
+  <h2><i class="fa-solid fa-right-to-bracket"></i> User Login</h2>
+
+  <form #loginForm="ngForm" *ngIf="!showThankYou" (ngSubmit)="onSubmit(loginForm)">
+    <!-- STEP 1 -->
+    <div *ngIf="step === 1">
+      <div class="form-group">
+        <label><i class="fa-solid fa-envelope"></i> Email or Phone</label>
+        <input type="text" name="emailOrPhone" [(ngModel)]="emailOrPhone" required />
+      </div>
+
+      <div class="form-group">
+        <label><i class="fa-solid fa-lock"></i> Password</label>
+        <div class="password-container">
+          <input [type]="hidePassword ? 'password' : 'text'" name="password" [(ngModel)]="password" required minlength="6" />
+          <button type="button" class="toggle-eye" (click)="togglePassword()">
+            <i [class]="hidePassword ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'"></i>
+          </button>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" type="submit"><i class="fa-solid fa-arrow-right-to-bracket"></i> Next</button>
+      <p class="forgot" (click)="forgotPassword()">Forgot Password?</p>
+    </div>
+
+    <!-- STEP 2 -->
+    <div *ngIf="step === 2">
+      <p class="info">OTP Sent (simulated): <strong>{{ generatedOTP }}</strong></p>
+      <div class="form-group">
+        <label><i class="fa-solid fa-key"></i> Enter OTP</label>
+        <input type="text" name="otp" maxlength="6" [(ngModel)]="otp" required />
+      </div>
+
+      <div class="actions-row">
+        <button type="button" class="btn btn-secondary" (click)="backToEmail()">Back</button>
+        <button type="button" class="btn btn-success" (click)="verifyOTP()">Verify OTP</button>
+      </div>
+    </div>
+  </form>
+
+  <div *ngIf="showThankYou" class="thank-you">
+    <h3>🎉 Thank you! Login Successful.</h3>
+    <p>Redirecting to Admin Panel...</p>
+  </div>
+</div>

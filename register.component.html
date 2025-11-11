@@ -1,0 +1,119 @@
+<div class="register-container" *ngIf="step === 1">
+  <h2><i class="fa-solid fa-handshake"></i> Welcome to Our Family!</h2>
+  <p>Please fill in your details to create an account.</p>
+
+  <form #stepOneForm="ngForm" (ngSubmit)="nextStep(stepOneForm)">
+    <!-- Full Name -->
+    <mat-form-field appearance="outline">
+      <mat-label><i class="fa-solid fa-user"></i> Full Name</mat-label>
+      <input matInput name="fullName" [(ngModel)]="user.fullName" required minlength="3">
+      <mat-error *ngIf="stepOneForm.submitted && !user.fullName">Full Name is required</mat-error>
+    </mat-form-field>
+
+    <!-- Email -->
+    <mat-form-field appearance="outline">
+      <mat-label><i class="fa-solid fa-envelope"></i> Email</mat-label>
+      <input matInput name="email" [(ngModel)]="user.email" required email>
+      <mat-error *ngIf="stepOneForm.submitted && !user.email">Valid Email required</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      Next <i class="fa-solid fa-arrow-right"></i>
+    </button>
+  </form>
+</div>
+
+<!-- Step 2 -->
+<div class="register-container" *ngIf="step === 2">
+  <h2><i class="fa-solid fa-phone"></i> Contact Information</h2>
+  <form #stepTwoForm="ngForm" (ngSubmit)="nextStep(stepTwoForm)">
+    <div class="phone-section">
+      <mat-form-field appearance="outline" class="code">
+        <mat-label>Code</mat-label>
+        <mat-select name="countryCode" [(ngModel)]="user.countryCode" required>
+          <mat-option *ngFor="let code of countryCodes" [value]="code">{{ code }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="phone">
+        <mat-label><i class="fa-solid fa-phone"></i> Phone</mat-label>
+        <input matInput name="phone" [(ngModel)]="user.phone" required pattern="^[0-9]{10,15}$">
+        <mat-error *ngIf="stepTwoForm.submitted && !user.phone">Enter valid phone</mat-error>
+      </mat-form-field>
+    </div>
+
+    <button mat-stroked-button color="accent" type="button" (click)="previousStep()">
+      <i class="fa-solid fa-arrow-left"></i> Back
+    </button>
+    <button mat-raised-button color="primary" type="submit">
+      Next <i class="fa-solid fa-arrow-right"></i>
+    </button>
+  </form>
+</div>
+
+<!-- Step 3 -->
+<div class="register-container" *ngIf="step === 3">
+  <h2><i class="fa-solid fa-calendar"></i> Personal Details</h2>
+  <form #stepThreeForm="ngForm" (ngSubmit)="nextStep(stepThreeForm)">
+    <mat-form-field appearance="outline">
+      <mat-label>Date of Birth</mat-label>
+      <input matInput type="date" name="dob" [(ngModel)]="user.dob" (change)="calculateAge($event)" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Age</mat-label>
+      <input matInput name="age" [(ngModel)]="user.age" readonly>
+    </mat-form-field>
+
+    <button mat-stroked-button color="accent" type="button" (click)="previousStep()">
+      <i class="fa-solid fa-arrow-left"></i> Back
+    </button>
+    <button mat-raised-button color="primary" type="submit">
+      Next <i class="fa-solid fa-arrow-right"></i>
+    </button>
+  </form>
+</div>
+
+<!-- Step 4 -->
+<div class="register-container" *ngIf="step === 4">
+  <h2><i class="fa-solid fa-lock"></i> Secure Your Account</h2>
+  <form #stepFourForm="ngForm" (ngSubmit)="onRegister(stepFourForm)">
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput [type]="hidePassword ? 'password' : 'text'"
+             name="password"
+             [(ngModel)]="user.password"
+             required minlength="6"
+             pattern="^(?=.*[0-9])(?=.*[!@#$%^&*]).+$">
+      <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+      <mat-hint>Include numbers & symbols (!@#$%^&*)</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Confirm Password</mat-label>
+      <input matInput [type]="hideConfirm ? 'password' : 'text'"
+             name="confirmPassword" [(ngModel)]="user.confirmPassword" required>
+      <button mat-icon-button matSuffix type="button" (click)="hideConfirm = !hideConfirm">
+        <mat-icon>{{ hideConfirm ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <div class="btn-group">
+      <button mat-stroked-button color="accent" type="button" (click)="previousStep()">
+        <i class="fa-solid fa-arrow-left"></i> Back
+      </button>
+      <button mat-raised-button color="primary" type="submit">
+        <i class="fa-solid fa-paper-plane"></i> Register
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Step 5 -->
+<div class="register-container" *ngIf="step === 5">
+  <h2><i class="fa-solid fa-check-circle"></i> Thank You!</h2>
+  <p>Your account has been created successfully 🎉</p>
+  <p><strong>Founder Message:</strong> Welcome Dhruv Company! We value your trust.</p>
+</div>
